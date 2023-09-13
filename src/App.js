@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
 import Counter from "./components/chunks/Counter";
@@ -8,29 +7,19 @@ import PostList from "./components/posts/PostList";
 
 function App() {
     const [posts, setPosts] = useState([]);
-    const [formData, setFormData] = useState({
-        title: "",
-        content: "",
-    });
+    const startText = "Post list is empty";
+    const blogTitle = "Post title"
 
-    const addPostHandler = (e) => {
-        e.preventDefault();
-
-        const newPost = {
-            id: uuidv4(),
-            title: formData.title,
-            content: formData.content,
-        };
-        setPosts((posts) => [...posts, newPost]);
-        setFormData({
-            title: "",
-            content: "",
-        });
+    const createPostHandler = (newPost) => {
+        setPosts([...posts, newPost]);
     };
+
+    // const filterAction = (arr, id) => arr.filter((item) => item?.id === id)
 
     const removePostHandler = (id) => {
         const newList = posts.filter((p) => p.id !== id);
         setPosts(newList);
+    
     };
 
     return (
@@ -38,15 +27,24 @@ function App() {
             <Wrapper>
                 <Counter />
                 <PostForm
-                    addPost={addPostHandler}
-                    setFormData={setFormData}
-                    formData={formData}
+                    createPost={createPostHandler}
+                    posts={posts}
                 />
+                <div className="SortBlock">
+                    <select name="select" id="select">
+                        <option value="sort-by-title" id="sort-by-title">По названию</option>
+                        <option value="sort-by-content" id="sort-by-content">По контенту</option>
+                        <option value="sort-by-id" id="sort-by-id">По ID</option>
+                    </select>
+                </div>
+
+                {posts.length ? <h3>{blogTitle}</h3> : <h3>{startText}</h3> } 
                 <PostList
                     title="Posts list"
                     removePost={removePostHandler}
                     posts={posts}
                 />
+                  
             </Wrapper>
         </div>
     );

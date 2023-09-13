@@ -1,13 +1,35 @@
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+
 import FormController from "../chunks/FormController";
 import Btn from "../ui/Btn";
 import styles from "./PostForm.module.css";
 
-const PostForm = ({ addPost, formData, setFormData, ...props }) => {
+const PostForm = ({ createPost, posts, ...props }) => {
+    const [formData, setFormData] = useState({
+        title: "",
+        content: "",
+    });
+
+    const addPostHandler = (e) => {
+        e.preventDefault();
+
+        const newPost = {
+            ...formData,
+            id: uuidv4(),
+        };
+        createPost(newPost);
+
+        setFormData({
+            title: "",
+            content: "",
+        });
+    };
+
     return (
         <form
             method="get"
-            onSubmit={addPost}
+            onSubmit={addPostHandler}
             className={styles.PostForm}
         >
             <h3>Post form</h3>
