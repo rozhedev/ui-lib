@@ -1,0 +1,14 @@
+.FormController {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.FormController>* {
+    margin-top: 0.6rem;
+}
+
+.FormController label {
+    margin-top: 0;
+    font-weight: 500;
+}

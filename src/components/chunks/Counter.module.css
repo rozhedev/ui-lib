@@ -1,0 +1,14 @@
+.Counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Counter>* {
+    margin-left: 1.5rem;
+}
+
+.Counter span {
+    font-weight: 700;
+    font-size: 2rem;
+}

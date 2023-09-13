@@ -1,0 +1,16 @@
+.Wrapper {
+    margin: 0rem auto;
+    min-height: 100vh;
+    padding: 1.8rem 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: var(--xxl-cont);
+    border-left: 4px solid var(--secondary-darkgray);
+    border-right: 4px solid var(--secondary-darkgray);
+    background-color: #fff;
+}
+
+.Wrapper > * {
+    margin-top: 1.5rem;
+}
