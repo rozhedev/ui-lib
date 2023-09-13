@@ -1,0 +1,13 @@
+.Select {
+    padding: 0.6rem 0.9rem;
+    font-size: 1.125rem;
+    border: 2px solid var(--secondary-lightgray);
+    background-color: var(--primary-lightgray);
+    border-radius: 0.5rem;
+}
+
+.Select:focus {
+    border: 2px solid var(--accent);
+    box-shadow: inset 0 0 4px 0px var(--accent);
+    background-color: #fff;
+}

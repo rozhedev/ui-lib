@@ -1,0 +1,29 @@
+import styles from "./Select.module.css";
+
+const Select = ({ id, defaultValue, options, value, onChange, ...props }) => {
+    const varName = null;
+
+    return (
+        <select
+            name={id}
+            id={id}
+            title={id}
+            className={styles.Select}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+        >
+            <option
+                key="default-label"
+                disabled
+                value="default-label"
+            >
+                {defaultValue}
+            </option>
+            {options.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+        </select>
+    );
+};
+
+export default Select;
