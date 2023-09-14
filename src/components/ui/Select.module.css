@@ -1,9 +1,11 @@
 .Select {
     padding: 0.6rem 0.9rem;
     font-size: 1.125rem;
+    color: var(--secondary-darkgray);
     border: 2px solid var(--secondary-lightgray);
     background-color: var(--primary-lightgray);
     border-radius: 0.5rem;
+    width: fit-content;
 }
 
 .Select:focus {
