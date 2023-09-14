@@ -1,0 +1,28 @@
+.ModalOverlay {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin-top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
+.ModalOverlay.active {
+    display: flex;
+}
+
+.ModalBody {
+    height: fit-content;
+    padding: 1rem;
+    background-color: #fff;
+    border: 2px solid var(--darken-lightgray);
+    border-radius: 0.5rem;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+}

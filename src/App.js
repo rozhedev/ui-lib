@@ -6,6 +6,8 @@ import Wrapper from "./layout/Wrapper";
 import PostForm from "./components/posts/PostForm";
 import PostList from "./components/posts/PostList";
 import PostFilters from "./components/posts/PostFilters";
+import Modal from "./components/ui/Modal";
+import Btn from "./components/ui/Btn";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -13,11 +15,14 @@ function App() {
         sort: "",
         query: "",
     });
+    // * Modal state
+    const [visible, setVisible] = useState(false);
 
     // * HANDLERS
 
     const createPostHandler = (newPost) => {
         setPosts([...posts, newPost]);
+        setVisible(false);
     };
 
     const removePostHandler = (id) => {
@@ -27,36 +32,44 @@ function App() {
 
     // * SORT & MEMO STATE
 
-    // * Сортируем некие 2 объекта a и b, используя динамическое свойство,
+    // * Сортируем некие 2 объекта a и b (из массива posts), используя динамическое свойство,
     // * которое являет собой строку запроса что хранится в filters.sort
     // * через localeCompare сравниваем, с каждым значением свойства поста в массиве
     // * И всё это кешируется через useMemo
 
     const sortPostMemo = useMemo(() => {
-
         if (filters.sort) return [...posts].sort((a, b) => a[filters.sort].localeCompare(b[filters.sort]));
 
         return posts;
     }, [filters.sort, posts]);
 
-
     // * SORT & SEARCH HANDLER
 
     const sortAndSearchPostsMemo = useMemo(() => {
-        // * Case insensitive search uses only post title
+        // * Case insensitive search uses only post title prop
         const query = filters.query.toLowerCase();
 
-        return sortPostMemo.filter((post) => post.title.toLowerCase().includes(query))
+        return sortPostMemo.filter((post) => post.title.toLowerCase().includes(query));
     }, [filters.query, sortPostMemo]);
 
     return (
         <div className="App">
             <Wrapper>
                 <Counter />
-                <PostForm
-                    createPost={createPostHandler}
-                    posts={posts}
-                />
+                <Btn
+                    onClick={(e) => setVisible(true)}
+                >
+                    Show visible
+                </Btn>
+                <Modal
+                    visible={visible}
+                    setVisible={setVisible}
+                >
+                    <PostForm
+                        createPost={createPostHandler}
+                        posts={posts}
+                    />
+                </Modal>
                 <PostFilters
                     filters={filters}
                     setFilters={setFilters}
