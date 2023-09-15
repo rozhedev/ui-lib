@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { modalOverlayAnim } from "./data/anim-config";
 
 import "./App.css";
 import Counter from "./components/chunks/Counter";
@@ -54,23 +55,13 @@ function App() {
     }, [filters.query, sortPostMemo]);
 
     // * ANIM
-    const modalOverlayAnim = {
-        initial: {
-            opacity: 0,
-            duration: 0.3,
-        },
-        animate: {
-            opacity: 1,
-            duration: 0.3,
-        },
-    };
 
     return (
         <div className="App">
             <Wrapper>
                 <Counter />
                 <AnimatePresence>
-                    <Btn onClick={(e) => setVisible(true)}>Show visible</Btn>
+                    <Btn onClick={(e) => setVisible(true)}>Show form</Btn>
                     {visible && (
                         <motion.div
                             style={{ marginTop: "0px" }}

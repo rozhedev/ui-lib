@@ -1,25 +1,32 @@
 import styles from "./PostFilters.module.css";
-import inpStyles from '../ui/Inp.module.css'
-import Inp from '../ui/Inp';
-import Select from '../ui/Select';
+import inpStyles from "../ui/Inp.module.css";
+import Inp from "../ui/Inp";
+import Select from "../ui/Select";
+import Btn from "../ui/Btn";
 
 const PostFilters = ({ filters, setFilters, ...props }) => {
-
     return (
         <div className={styles.PostFilters}>
-            <Inp
-                className={`${inpStyles.Inp} sort-widget__inp`}
-                placeholder="Поиск постов"
-                value={filters.query}
-                onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-            />
+            <div>
+                <Inp
+                    className={`${inpStyles.Inp} ${inpStyles.InpSmall}`}
+                    placeholder="Поиск постов"
+                    value={filters.query}
+                    onChange={(e) => setFilters({ ...filters, query: e.target.value })}
+                />
+                <Btn
+                    type="submit"
+                    onClick={() => setFilters({ ...filters, query: "" })}
+                >
+                    Clear query
+                </Btn>
+            </div>
 
             <Select
                 id="select-sort"
                 value={filters.sort}
-                onChange={selectedSort => setFilters({ ...filters, sort: selectedSort })}
+                onChange={(selectedSort) => setFilters({ ...filters, sort: selectedSort })}
                 defaultValue="Сортировка по"
-                
                 // * значение свойства value должно совпадать
                 // * с именем свойства объекта newPost из PostForm
                 options={[

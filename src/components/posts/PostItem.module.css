@@ -10,10 +10,6 @@
     background-color: var(--primary-lightgray);
 }
 
-.PostItem:nth-of-type(n + 4) {
-    margin-top: 1.5rem;
-}
-
 .PostItem h4 {
     font-size: 1.25rem;
     font-weight: 700;

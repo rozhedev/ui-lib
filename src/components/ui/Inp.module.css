@@ -1,4 +1,4 @@
-.Inp {
+.Inp, .InpSmall {
     min-width: 400px;
     padding: 0.75rem 1rem;
     font-size: 1.125rem;
@@ -8,6 +8,11 @@
     color: var(--primary-darkgray);
     background-color: var(--primary-lightgray);
     transition: .6s all;
+}
+
+.InpSmall {
+    min-width: 250px;
+    margin-right: 1rem;
 }
 
 .Inp:focus {

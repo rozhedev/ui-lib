@@ -1,20 +1,10 @@
 import { motion } from "framer-motion";
+import { modalBodyAnim } from "../../data/anim-config";
+
 import styles from "../ui/Modal.module.css";
 
 const Modal = ({ children, visible, setVisible, ...props }) => {
     const rootClasses = [styles.ModalOverlay];
-    const modalBodyAnim = {
-        initial: {
-            opacity: 0,
-            scale: 0.5,
-            duration: 0.3,
-        },
-        animate: {
-            opacity: 1,
-            scale: 1,
-            duration: 0.3,
-        },
-    };
     visible && rootClasses.push(styles.active);
 
     return (

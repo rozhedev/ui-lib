@@ -5,8 +5,3 @@
     border-top: 2px solid var(--darken-lightgray);
     width: 90%;
 }
-
-.sort-widget__inp {
-    min-width: 250px !important;
-    /* width: fit-content; */
-}

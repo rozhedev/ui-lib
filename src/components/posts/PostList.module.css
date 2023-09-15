@@ -1,7 +1,11 @@
 .PostList {
-    margin: 0 auto;
+    margin: 0.75rem auto;
     width: 90%;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+}
+
+.PostList > *:nth-of-type(n + 4) {
+    margin-top: 1.5rem;
 }
