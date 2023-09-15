@@ -20,6 +20,7 @@ const Modal = ({ children, visible, setVisible, ...props }) => {
             >
                 <div
                     className={styles.ModalBody}
+                    // * For prevent sailing event
                     onClick={(e) => e.stopPropagation()}
                 >
                     {children}

@@ -1,7 +1,7 @@
 import styles from "./Select.module.css";
 
 const Select = ({ id, defaultValue, options, value, onChange, ...props }) => {
-    const varName = null;
+    /* <span>&#9660;</span> */
 
     return (
         <select
@@ -20,7 +20,12 @@ const Select = ({ id, defaultValue, options, value, onChange, ...props }) => {
                 {defaultValue}
             </option>
             {options.map((opt) => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                <option
+                    key={opt.value}
+                    value={opt.value}
+                >
+                    {opt.label}
+                </option>
             ))}
         </select>
     );

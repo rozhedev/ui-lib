@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { modalOverlayAnim } from "./data/anim-config";
 
@@ -10,6 +10,7 @@ import PostList from "./components/posts/PostList";
 import PostFilters from "./components/posts/PostFilters";
 import Modal from "./components/ui/Modal";
 import Btn from "./components/ui/Btn";
+import { usePosts } from "./hooks/usePosts";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -17,6 +18,8 @@ function App() {
         sort: "",
         query: "",
     });
+    const sortAndSearchPosts = usePosts(posts, filters.sort, filters.query);
+
     // * Modal state
     const [visible, setVisible] = useState(false);
 
@@ -31,30 +34,6 @@ function App() {
         const newList = posts.filter((p) => p.id !== id);
         setPosts(newList);
     };
-
-    // * SORT & MEMO STATE
-
-    // * Сортируем некие 2 объекта a и b (из массива posts), используя динамическое свойство,
-    // * которое являет собой строку запроса что хранится в filters.sort
-    // * через localeCompare сравниваем, с каждым значением свойства поста в массиве
-    // * И всё это кешируется через useMemo
-
-    const sortPostMemo = useMemo(() => {
-        if (filters.sort) return [...posts].sort((a, b) => a[filters.sort].localeCompare(b[filters.sort]));
-
-        return posts;
-    }, [filters.sort, posts]);
-
-    // * SORT & SEARCH HANDLER
-
-    const sortAndSearchPostsMemo = useMemo(() => {
-        // * Case insensitive search uses only post title prop
-        const query = filters.query.toLowerCase();
-
-        return sortPostMemo.filter((post) => post.title.toLowerCase().includes(query));
-    }, [filters.query, sortPostMemo]);
-
-    // * ANIM
 
     return (
         <div className="App">
@@ -92,7 +71,7 @@ function App() {
                 <PostList
                     title="Posts list"
                     removePost={removePostHandler}
-                    posts={sortAndSearchPostsMemo}
+                    posts={sortAndSearchPosts}
                 />
             </Wrapper>
         </div>
