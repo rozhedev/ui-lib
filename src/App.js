@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import "./App.css";
 import Counter from "./components/chunks/Counter";
@@ -52,24 +53,46 @@ function App() {
         return sortPostMemo.filter((post) => post.title.toLowerCase().includes(query));
     }, [filters.query, sortPostMemo]);
 
+    // * ANIM
+    const modalOverlayAnim = {
+        initial: {
+            opacity: 0,
+            duration: 0.3,
+        },
+        animate: {
+            opacity: 1,
+            duration: 0.3,
+        },
+    };
+
     return (
         <div className="App">
             <Wrapper>
                 <Counter />
-                <Btn
-                    onClick={(e) => setVisible(true)}
-                >
-                    Show visible
-                </Btn>
-                <Modal
-                    visible={visible}
-                    setVisible={setVisible}
-                >
-                    <PostForm
-                        createPost={createPostHandler}
-                        posts={posts}
-                    />
-                </Modal>
+                <AnimatePresence>
+                    <Btn onClick={(e) => setVisible(true)}>Show visible</Btn>
+                    {visible && (
+                        <motion.div
+                            style={{ marginTop: "0px" }}
+                            key="modal"
+                            initial="initial"
+                            animate="animate"
+                            exit="initial"
+                            variants={modalOverlayAnim}
+                        >
+                            <Modal
+                                visible={visible}
+                                setVisible={setVisible}
+                            >
+                                <PostForm
+                                    createPost={createPostHandler}
+                                    posts={posts}
+                                />
+                            </Modal>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
                 <PostFilters
                     filters={filters}
                     setFilters={setFilters}
