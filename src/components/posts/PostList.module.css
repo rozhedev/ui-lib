@@ -1,6 +1,6 @@
 .PostList {
     margin: 0.75rem auto;
-    width: 90%;
+    width: var(--subcontainer-percent);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

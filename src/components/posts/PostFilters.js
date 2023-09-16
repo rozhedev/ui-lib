@@ -36,7 +36,7 @@ const PostFilters = ({ filters, setFilters, ...props }) => {
                     },
                     {
                         label: "По контенту",
-                        value: "content",
+                        value: "body",
                     },
                     {
                         label: "По ID",

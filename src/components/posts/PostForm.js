@@ -8,7 +8,7 @@ import styles from "./PostForm.module.css";
 const PostForm = ({ createPost, posts, ...props }) => {
     const [formData, setFormData] = useState({
         title: "",
-        content: "",
+        body: "",
     });
 
     const addPostHandler = (e) => {
@@ -22,7 +22,7 @@ const PostForm = ({ createPost, posts, ...props }) => {
 
         setFormData({
             title: "",
-            content: "",
+            body: "",
         });
     };
 
@@ -50,8 +50,8 @@ const PostForm = ({ createPost, posts, ...props }) => {
                 title="post-content"
                 labelText="Post content"
                 inpPlaceholder="Enter content..."
-                formData={formData.content}
-                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                formData={formData.body}
+                onChange={(e) => setFormData({ ...formData, body: e.target.value })}
             />
             <Btn type="submit">Publish</Btn>
         </form>

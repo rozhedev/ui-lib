@@ -6,7 +6,7 @@ const PostItem = ({ post, removePost }) => {
         <div className={styles.PostItem}>
             <h4>{post.title}</h4>
             <div className={styles.PostContent}>
-                <p>{post.content}</p>
+                <p>{post.body}</p>
                 <small>Post id: {post.id.substr(0, 5)}</small>
             </div>
             <div className={styles.BtnGroup}>

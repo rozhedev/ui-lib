@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { modalOverlayAnim } from "./data/anim-config";
+import { API_LINKS } from "./data/api-keys";
 
 import "./App.css";
 import Counter from "./components/chunks/Counter";
@@ -11,6 +12,8 @@ import PostFilters from "./components/posts/PostFilters";
 import Modal from "./components/ui/Modal";
 import Btn from "./components/ui/Btn";
 import { usePosts } from "./hooks/usePosts";
+import PostService from "./API/PostService";
+import Loader from "./components/ui/Loader";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -22,6 +25,8 @@ function App() {
 
     // * Modal state
     const [visible, setVisible] = useState(false);
+    // * Load state
+    const [isPostsLoad, setIsPostsLoad] = useState(false);
 
     // * HANDLERS
 
@@ -34,6 +39,22 @@ function App() {
         const newList = posts.filter((p) => p.id !== id);
         setPosts(newList);
     };
+
+    // * Posts load
+    async function fetchPosts() {
+        setIsPostsLoad(true);
+
+        const purePosts = await PostService.getAll(API_LINKS.getPosts);
+        // * Convert id to string for correct sort working
+        const posts = await purePosts.map((post) => ({ ...post, id: post.id.toString() }));
+
+        setPosts(posts);
+        setIsPostsLoad(false);
+    }
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
 
     return (
         <div className="App">
@@ -68,11 +89,15 @@ function App() {
                     setFilters={setFilters}
                 />
 
-                <PostList
-                    title="Posts list"
-                    removePost={removePostHandler}
-                    posts={sortAndSearchPosts}
-                />
+                {isPostsLoad ? (
+                    <Loader/>
+                ) : (
+                    <PostList
+                        title="Posts list"
+                        removePost={removePostHandler}
+                        posts={sortAndSearchPosts}
+                    />
+                )}
             </Wrapper>
         </div>
     );

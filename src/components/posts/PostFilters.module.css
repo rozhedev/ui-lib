@@ -3,5 +3,5 @@
     justify-content: space-around;
     padding-top: 1.5rem;
     border-top: 2px solid var(--darken-lightgray);
-    width: 90%;
+    width: var(--subcontainer-percent);
 }

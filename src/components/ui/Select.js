@@ -13,9 +13,10 @@ const Select = ({ id, defaultValue, options, value, onChange, ...props }) => {
             onChange={(e) => onChange(e.target.value)}
         >
             <option
-                key="default-label"
+                key="disabled-option"
                 disabled
-                value="default-label"
+                selected
+                value="Сортировка по"
             >
                 {defaultValue}
             </option>
