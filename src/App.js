@@ -19,6 +19,8 @@ import Modal from "./components/ui/Modal";
 import Btn from "./components/ui/Btn";
 import PostService from "./API/PostService";
 import Loader from "./components/ui/Loader";
+import usePagination from "./hooks/usePagination";
+import Pagination from "./components/ui/Pagination";
 
 function App() {
     const [posts, setPosts] = useState([]);
@@ -27,39 +29,35 @@ function App() {
         query: "",
     });
     const sortAndSearchPosts = usePosts(posts, filters.sort, filters.query);
-    // * States for pagination
-    const [totalPagesCount, setTotalPagesCount] = useState(0);
-    const [postsLimit, setPostsLimit] = useState(10);
-    const [postPage, setPostPage] = useState(1);
+
+    // * Pagination hook
+    const [pagesArr, setTotalPagesCount, postsLimit, postPage, setPostPage] = usePagination(0, 15, 1);
 
     // * Modal state
     const [visible, setVisible] = useState(false);
 
-    //*  Load & error handling, uses custom hook
+    //*  Load & error handling
     const [fetchPosts, isPostsLoad, loadErr] = useFetching(async () => {
         const res = await PostService.getAll(API_LINKS.getPosts, postsLimit, postPage);
         const json = await res.json();
 
-        // * Convert id to string for correct sort working & remove userId prop
+        // * Rewrite id via uuidv4() for correct sort working
         const posts = json.map((post) => ({
             ...post,
             id: uuidv4(),
         }));
-
         setPosts(posts);
+        
         const totalCount = res.headers.get("X-Total-Count");
+
+        // * after fetching change state uses f(x) from utils/getPages.js
         setTotalPagesCount(getPagesCount(totalCount, postsLimit));
     });
 
+    // * Use effect update current post page num
     useEffect(() => {
         fetchPosts();
     }, [postPage]);
-
-    // TODO Create custom hook usePagination
-    let pagesArr = [];
-    for (let i = 0; i < totalPagesCount; i++) {
-        pagesArr.push(i + 1);
-    }
 
     // * HANDLERS
 
@@ -72,8 +70,6 @@ function App() {
         const newList = posts.filter((p) => p.id !== id);
         setPosts(newList);
     };
-
-    const changePage = (page) => setPostPage(page);
 
     return (
         <div className="App">
@@ -119,17 +115,11 @@ function App() {
                         posts={sortAndSearchPosts}
                     />
                 )}
-                <div className="pagination-container">
-                    {pagesArr.map((page, index) => (
-                        <Btn
-                            key={index}
-                            onClick={(e) => changePage(page)}
-                        >
-                            {page}
-                        </Btn>
-                    ))}
-                </div>
-                
+                <Pagination
+                    pagesArr={pagesArr}
+                    postPage={postPage}
+                    setPostPage={setPostPage}
+                />
             </Wrapper>
         </div>
     );

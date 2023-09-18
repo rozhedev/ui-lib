@@ -1,0 +1,15 @@
+.PaginationContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 90%;
+    justify-content: center;
+}
+
+.PaginationContainer > button:not(:first-child) {
+    margin-left: 1.5rem;
+}
+
+.PaginationContainer > button:nth-of-type(n + 15) {
+    margin-top: 1.5rem;
+}

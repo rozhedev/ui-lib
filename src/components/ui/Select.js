@@ -15,7 +15,6 @@ const Select = ({ id, defaultValue, options, value, onChange, ...props }) => {
             <option
                 key="disabled-option"
                 disabled
-                selected
                 value="Сортировка по"
             >
                 {defaultValue}
