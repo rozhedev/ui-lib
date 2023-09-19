@@ -1,14 +1,24 @@
+import { v4 as uuidv4 } from "uuid";
+
 import Btn from "./Btn";
-import btnStyles from './Btn.module.css'
+import btnStyles from "./Btn.module.css";
 import pagStyles from "./Pagination.module.css";
 
 const Pagination = ({ pagesArr, postPage, setPostPage }) => {
-
     return (
         <div className={pagStyles.PaginationContainer}>
-            {pagesArr.map((page, index) => (
+            <Btn
+                key={uuidv4()}
+                className={postPage > 1 ? btnStyles.Btn : btnStyles.BtnDisabled}
+                onClick={() => {
+                    postPage > 1 && setPostPage(postPage - 1);
+                }}
+            >
+                &#9668;
+            </Btn>
+            {pagesArr.map((page) => (
                 <Btn
-                    key={index}
+                    key={uuidv4()}
                     onClick={(e) => {
                         setPostPage(page);
                     }}
@@ -18,6 +28,15 @@ const Pagination = ({ pagesArr, postPage, setPostPage }) => {
                     {page}
                 </Btn>
             ))}
+            <Btn
+                key={uuidv4()}
+                className={postPage < pagesArr.at(-1) ? btnStyles.Btn : btnStyles.BtnDisabled}
+                onClick={() => {
+                    postPage < pagesArr.at(-1) && setPostPage(postPage + 1);
+                }}
+            >
+                &#9658;
+            </Btn>
         </div>
     );
 };

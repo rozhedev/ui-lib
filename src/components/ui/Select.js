@@ -1,8 +1,6 @@
 import styles from "./Select.module.css";
 
 const Select = ({ id, defaultValue, options, value, onChange, ...props }) => {
-    /* <span>&#9660;</span> */
-
     return (
         <select
             name={id}

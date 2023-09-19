@@ -7,7 +7,7 @@ import { useFetching } from "./hooks/useFetching";
 
 import { modalOverlayAnim } from "./data/anim-config";
 import { API_LINKS } from "./data/api-keys";
-import { getPagesCount } from "./utils/getPages";
+import { getPagesCount } from "./utils/getPagesCount";
 
 import "./App.css";
 import Counter from "./components/chunks/Counter";
@@ -50,7 +50,7 @@ function App() {
         
         const totalCount = res.headers.get("X-Total-Count");
 
-        // * after fetching change state uses f(x) from utils/getPages.js
+        // * after fetching change state uses f(x) from utils/getPagesCount.js
         setTotalPagesCount(getPagesCount(totalCount, postsLimit));
     });
 

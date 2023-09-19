@@ -27,8 +27,9 @@ const PostFilters = ({ filters, setFilters, ...props }) => {
                 value={filters.sort}
                 onChange={(selectedSort) => setFilters({ ...filters, sort: selectedSort })}
                 defaultValue="Сортировка по"
-                // * значение свойства value должно совпадать
-                // * с именем свойства объекта newPost из PostForm
+                
+                // * value prop must be same with prop name "newPost" 
+                // * object from PostForm
                 options={[
                     {
                         label: "По заголовку",
