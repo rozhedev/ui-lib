@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { v4 as uuidv4 } from "uuid";
 
@@ -8,6 +8,8 @@ import { useFetching } from "./hooks/useFetching";
 import { modalOverlayAnim } from "./data/anim-config";
 import { API_LINKS } from "./data/api-keys";
 import { getPagesCount } from "./utils/getPagesCount";
+import { useObserver } from "./hooks/useObserver";
+import { usePagination } from "./hooks/usePagination";
 
 import "./App.css";
 import Counter from "./components/chunks/Counter";
@@ -19,7 +21,6 @@ import Modal from "./components/ui/Modal";
 import Btn from "./components/ui/Btn";
 import PostService from "./API/PostService";
 import Loader from "./components/ui/Loader";
-import usePagination from "./hooks/usePagination";
 import Pagination from "./components/ui/Pagination";
 
 function App() {
@@ -31,7 +32,8 @@ function App() {
     const sortAndSearchPosts = usePosts(posts, filters.sort, filters.query);
 
     // * Pagination hook
-    const [pagesArr, setTotalPagesCount, postsLimit, postPage, setPostPage] = usePagination(0, 15, 1);
+    const postsLoadLimit = 10;
+    const [totalPagesCount, setTotalPagesCount, postsLimit, postPage, setPostPage, pagesArr] = usePagination(0, postsLoadLimit, 1);
 
     // * Modal state
     const [visible, setVisible] = useState(false);
@@ -42,16 +44,24 @@ function App() {
         const json = await res.json();
 
         // * Rewrite id via uuidv4() for correct sort working
-        const posts = json.map((post) => ({
+        const newPosts = json.map((post) => ({
             ...post,
             id: uuidv4(),
         }));
-        setPosts(posts);
-        
+        setPosts(newPosts);
+
         const totalCount = res.headers.get("X-Total-Count");
 
         // * after fetching change state uses f(x) from utils/getPagesCount.js
         setTotalPagesCount(getPagesCount(totalCount, postsLimit));
+    });
+
+    // * Infinite posts load
+    const lastElemRef = useRef();
+    const loadCondition = postPage < totalPagesCount;
+
+    useObserver(lastElemRef, isPostsLoad, loadCondition, () => {
+        setPostPage(postPage + 1);
     });
 
     // * Use effect update current post page num
@@ -106,20 +116,26 @@ function App() {
 
                 {loadErr && <h3>Произошла ошибка: {loadErr}</h3>}
 
-                {isPostsLoad ? (
-                    <Loader />
-                ) : (
-                    <PostList
-                        title="Posts list"
-                        removePost={removePostHandler}
-                        posts={sortAndSearchPosts}
-                    />
-                )}
+                <PostList
+                    title="Posts list"
+                    removePost={removePostHandler}
+                    posts={sortAndSearchPosts}
+                />
+                {isPostsLoad && <Loader />}
+
                 <Pagination
                     pagesArr={pagesArr}
                     postPage={postPage}
                     setPostPage={setPostPage}
                 />
+                <div
+                    ref={lastElemRef}
+                    style={{
+                        margin: "8rem auto",
+                        height: "1px",
+                        display: loadCondition ? "block" : "none",
+                    }}
+                >{loadCondition && <Loader/>}</div>
             </Wrapper>
         </div>
     );

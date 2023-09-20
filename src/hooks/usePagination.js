@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const usePagination = (page = 0, limit = 10, slidePage = 1) => {
+export const usePagination = (page = 0, limit = 10, slidePage = 1) => {
 
     // * before async fetching, totalPagesCount = 0 
     const [totalPagesCount, setTotalPagesCount] = useState(page);
@@ -11,7 +11,5 @@ const usePagination = (page = 0, limit = 10, slidePage = 1) => {
     for (let i = 0; i < totalPagesCount; i++) {
         pagesArr.push(i + 1);
     }
-    return [pagesArr, setTotalPagesCount, postsLimit, postPage, setPostPage];
+    return [totalPagesCount, setTotalPagesCount, postsLimit, postPage, setPostPage, pagesArr];
 };
-
-export default usePagination;

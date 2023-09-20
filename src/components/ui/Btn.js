@@ -1,6 +1,6 @@
 import styles from "./Btn.module.css";
 
-const Btn = ({ onClick, children, disabled = false, ...props }) => {
+const Btn = ({ onClick, lastElemRef, children, disabled = false, ...props }) => {
     return (
         <button
             className={`
