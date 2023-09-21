@@ -1,4 +1,17 @@
-# React App
+# Posts app
+
+Study up used this course [click](https://www.youtube.com/watch?v=GNrdg3PzpJQ&t=1330s&pp=ygUFcmVhY3Q%3D)
+
+#Feature list
+* Post fetching from [jsonplaceholder](https://jsonplaceholder.typicode.com/)
+* Post deletion
+* Modal with write post form
+* Animations via framer motion
+* Sorting by, title, content & id
+* Search by title in current page
+* Pagination
+* Auto load page when scrolled to end
+_________________________________________________
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
